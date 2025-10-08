@@ -347,7 +347,10 @@ class SongDetailsPage extends StatelessWidget {
                         curve: Curves.easeOut,
                         builder: (context, double value, child) {
                           return Transform.translate(
-                            offset: Offset(0, (1 - value) * Get.height * 0.7), // slide from bottom
+                            offset: Offset(
+                              0,
+                              (1 - value) * Get.height * 0.7,
+                            ), // slide from bottom
                             child: Opacity(
                               opacity: value, // fade in
                               child: child,
@@ -369,10 +372,8 @@ class SongDetailsPage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: AnimatedTextKit(
-
                                     animatedTexts: [
                                       TypewriterAnimatedText(
-
                                         'لیست آهنگ ها',
                                         textAlign: TextAlign.center,
                                         cursor: "",
@@ -387,25 +388,42 @@ class SongDetailsPage extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Obx(
-                                        () => ReorderableListView.builder(
-                                      itemCount: controller.homeController.songs.length,
+                                    () => ReorderableListView.builder(
+                                      itemCount: controller
+                                          .homeController
+                                          .songs
+                                          .length,
                                       itemBuilder: (context, index) {
-                                        final song = controller.homeController.songs[index];
+                                        final song = controller
+                                            .homeController
+                                            .songs[index];
                                         return ListTile(
                                           trailing: Icon(Icons.drag_handle),
                                           key: ValueKey(song.id),
-                                          title: Text(song.title ?? 'Unknown Title'),
-                                          subtitle: Text(song.artist ?? 'Unknown Artist'),
+                                          title: Text(
+                                            song.title ?? 'Unknown Title',
+                                          ),
+                                          subtitle: Text(
+                                            song.artist ?? 'Unknown Artist',
+                                          ),
                                           onTap: () {
-                                            controller.homeController.playAt(index);
+                                            controller.homeController.playAt(
+                                              index,
+                                            );
                                             Get.back();
                                           },
                                         );
                                       },
                                       onReorder: (oldIndex, newIndex) {
                                         if (oldIndex < newIndex) newIndex -= 1;
-                                        final item = controller.homeController.songs.removeAt(oldIndex);
-                                        controller.homeController.songs.insert(newIndex, item);
+                                        final item = controller
+                                            .homeController
+                                            .songs
+                                            .removeAt(oldIndex);
+                                        controller.homeController.songs.insert(
+                                          newIndex,
+                                          item,
+                                        );
                                       },
                                     ),
                                   ),
@@ -416,9 +434,9 @@ class SongDetailsPage extends StatelessWidget {
                         ),
                       ),
                       isScrollControlled: true,
-                      backgroundColor: Colors.transparent, // برای اینکه borderRadius درست نمایش داده شود
+                      backgroundColor: Colors
+                          .transparent, // برای اینکه borderRadius درست نمایش داده شود
                     );
-
                   },
                   child: Text("لیست آهنگ ها"),
                 ),

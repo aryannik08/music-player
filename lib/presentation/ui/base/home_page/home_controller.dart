@@ -4,6 +4,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:untitled1/presentation/routes/app_routes.dart';
+import 'dart:io';
 
 class HomeController extends GetxController {
   final RxList<SongModel> songs = <SongModel>[].obs;
@@ -186,6 +187,50 @@ class HomeController extends GetxController {
     audioPlayer.setShuffleModeEnabled(isShuffling.value);
     if (isShuffling.value) {
       audioPlayer.shuffle();
+    }
+  }
+
+  Future<void> deleteSong(SongModel song) async {
+    // Stop playback if the deleted song is currently playing
+    if (currentIndex.value != -1 && songs[currentIndex.value].id == song.id) {
+      await stop();
+    }
+
+    // Remove from the list
+    songs.removeWhere((s) => s.id == song.id);
+
+    // Rebuild the playlist for just_audio
+    if (songs.isNotEmpty) {
+      final sources = songs
+          .map(
+            (s) => AudioSource.uri(
+              Uri.file(s.data),
+              tag: {'title': s.title, 'artist': s.artist ?? '', 'id': s.id},
+            ),
+          )
+          .toList();
+
+      _playlist = ConcatenatingAudioSource(children: sources);
+      try {
+        await audioPlayer.setAudioSource(_playlist!, initialIndex: currentIndex.value == -1 ? 0 : currentIndex.value);
+      } catch (e) {
+        Get.snackbar('خطا', 'به‌روزرسانی لیست پخش ممکن نیست');
+      }
+    } else {
+      await audioPlayer.setAudioSource(ConcatenatingAudioSource(children: []));
+      _playlist = null;
+    }
+
+    // Delete the actual file from storage
+    // It's important to use dart:io File for this
+    try {
+      final file = File(song.data);
+      if (await file.exists()) {
+        await file.delete();
+        Get.snackbar('موفقیت', '${song.title} حذف شد');
+      }
+    } catch (e) {
+      Get.snackbar('خطا', 'حذف فایل از حافظه دستگاه ممکن نیست: $e');
     }
   }
 

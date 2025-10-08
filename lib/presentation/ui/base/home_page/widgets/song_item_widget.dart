@@ -21,10 +21,19 @@ class SongItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: index != 0 ? 10 : 0, bottom: isLast == false ? 10 : 0),
+      margin: EdgeInsets.only(
+        top: index != 0 ? 10 : 0,
+        bottom: isLast == false ? 10 : 0,
+      ),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(0, 2))],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: ListTile(
         splashColor: Colors.transparent,
