@@ -107,8 +107,7 @@ class SongDetailsPage extends StatelessWidget {
                                   .homeController
                                   .currentIndex
                                   .value]
-                              .title ??
-                          'No song playing';
+                              .title;
 
                       return AnimatedTextKit(
                         key: ValueKey(title),
@@ -401,7 +400,7 @@ class SongDetailsPage extends StatelessWidget {
                                           trailing: Icon(Icons.drag_handle),
                                           key: ValueKey(song.id),
                                           title: Text(
-                                            song.title ?? 'Unknown Title',
+                                            song.title,
                                           ),
                                           subtitle: Text(
                                             song.artist ?? 'Unknown Artist',

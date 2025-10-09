@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
 
+import '../../../../core/storage/storage_service.dart';
 import '../../../routes/app_routes.dart';
 
 class SplashController extends GetxController {
-  nextPage() async {
-    await Future.delayed(Duration(seconds: 3));
-    Get.offNamed(AppRoutes.home);
-  }
 
+  final StorageService storage = StorageService();
 
-  @override
-  void onInit() async {
-    super.onInit();
-    await nextPage();
+  nextPage() {
+    if (storage.isFirst == true) {
+      Get.offNamed(AppRoutes.intro);
+    } else {
+      Get.offNamed(AppRoutes.home);
+    }
   }
 }

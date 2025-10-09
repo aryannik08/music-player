@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:untitled1/core/storage/storage_service.dart';
 import 'package:untitled1/presentation/routes/app_routes.dart';
 import 'dart:io';
 
@@ -19,9 +20,12 @@ class HomeController extends GetxController {
   late final AudioPlayer audioPlayer;
   ConcatenatingAudioSource? _playlist;
 
+  final StorageService storage = StorageService();
+
   @override
   void onInit() {
     super.onInit();
+    storage.isFirst = false;
     audioQuery = OnAudioQuery();
     audioPlayer = AudioPlayer();
 

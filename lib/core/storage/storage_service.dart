@@ -4,6 +4,7 @@ class StorageService {
   static const String _boxName = 'app_storage';
   static const String keyCity = 'city_name';
   static const String keyIsDark = 'is_dark';
+  static const String keyIsFirst = 'is_first';
 
   final GetStorage _box = GetStorage(_boxName);
 
@@ -27,7 +28,9 @@ class StorageService {
 
   set isDark(bool value) => _box.write(keyIsDark, value);
 
+  bool get isFirst => _box.read<bool>(keyIsFirst) ?? true;
 
+  set isFirst(bool value) => _box.write(keyIsFirst, value);
 
 
 
