@@ -12,6 +12,9 @@ class SongDetailsController extends GetxController {
   RxDouble currentValue = 0.0.obs;
   final homeController = Get.find<HomeController>();
   RxBool showTimeText = false.obs;
+  RxDouble nextRotation = 0.0.obs;
+  RxDouble preRotation = 0.0.obs;
+
 
 
   @override

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class BottomNavWidget extends StatelessWidget {
+class BottomNavWidget extends StatefulWidget {
   final RxBool isPlay;
   final VoidCallback onContainerTap;
   final VoidCallback onPlayTap;
@@ -23,11 +23,40 @@ class BottomNavWidget extends StatelessWidget {
   });
 
   @override
+  State<BottomNavWidget> createState() => _BottomNavWidgetState();
+}
+
+class _BottomNavWidgetState extends State<BottomNavWidget> with SingleTickerProviderStateMixin {
+  late final AnimationController _playPauseAnimationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _playPauseAnimationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
+    if (widget.isPlay.value) {
+      _playPauseAnimationController.forward();
+    }
+    widget.isPlay.listen((isPlaying) {
+      if (isPlaying) {
+        _playPauseAnimationController.forward();
+      } else {
+        _playPauseAnimationController.reverse();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _playPauseAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
     return GestureDetector(
-      onTap: onContainerTap,
+      onTap: widget.onContainerTap,
       child: AnimatedContainer(
         duration: Duration(seconds: 1),
         curve: Curves.fastOutSlowIn,
@@ -44,9 +73,9 @@ class BottomNavWidget extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(shape: BoxShape.circle),
                 // shadowColor: Colors.transparent,
-                child: song != null
+                child: widget.song != null
                     ? QueryArtworkWidget(
-                        id: song!.id,
+                        id: widget.song!.id,
                         type: ArtworkType.AUDIO,
                         nullArtworkWidget: const Icon(Icons.music_note),
                       )
@@ -65,15 +94,13 @@ class BottomNavWidget extends StatelessWidget {
                     child: Material(
                       type: MaterialType.transparency,
                       child: AnimatedTextKit(
-                        onTap: onContainerTap,
-                        key: ValueKey(song?.title ?? 'No song playing'),
+                        onTap: widget.onContainerTap,
+                        key: ValueKey(widget.song?.title ?? 'No song playing'),
                         animatedTexts: [
                           TypewriterAnimatedText(
-                            song?.title ?? 'No song playing',
+                            widget.song?.title ?? 'No song playing',
                             textAlign: TextAlign.start,
-                            textStyle: theme.textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
+                            textStyle: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                             speed: const Duration(milliseconds: 70),
                           ),
                         ],
@@ -89,12 +116,12 @@ class BottomNavWidget extends StatelessWidget {
                     child: Material(
                       type: MaterialType.transparency,
                       child: AnimatedTextKit(
-                        onTap: onContainerTap,
-                        key: ValueKey(song?.artist ?? 'Unknown artist'),
+                        onTap: widget.onContainerTap,
+                        key: ValueKey(widget.song?.artist ?? 'Unknown artist'),
                         animatedTexts: [
                           TypewriterAnimatedText(
                             textAlign: TextAlign.start,
-                            song?.artist ?? 'Unknown artist',
+                            widget.song?.artist ?? 'Unknown artist',
                             textStyle: const TextStyle(fontSize: 12),
                             speed: const Duration(milliseconds: 70),
                           ),
@@ -105,26 +132,28 @@ class BottomNavWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
             Hero(
               tag: "pre_icon",
-              child: IconButton(onPressed: onPreviousTap, icon: const Icon(Icons.skip_previous)),
+              child: IconButton(onPressed: widget.onPreviousTap, icon: const Icon(Icons.skip_previous)),
             ),
-            Obx(() {
-              return Hero(
-                tag: "pause_play_icon",
-                child: IconButton(
-                  onPressed: onPlayTap,
-                  icon: isPlay.value ? const Icon(Icons.pause) : const Icon(Icons.play_arrow),
+            Hero(
+              tag: "pause_play_icon",
+              child: IconButton(
+                onPressed: widget.onPlayTap,
+                icon: AnimatedIcon(
+                  icon: AnimatedIcons.play_pause,
+                  progress: _playPauseAnimationController,
+                  color: Theme.of(context).colorScheme.onSurface,
+
                 ),
-              );
-            }),
+              ),
+            ),
             Hero(
               tag: "next_icon",
-              child: IconButton(onPressed: onNextTap, icon: const Icon(Icons.skip_next)),
+              child: IconButton(onPressed: widget.onNextTap, icon: const Icon(Icons.skip_next)),
             ),
           ],
         ),
