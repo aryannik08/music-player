@@ -23,16 +23,14 @@ class HomePage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: const SizedBox(),
-            title:  AnimatedTextKit(
+            title: AnimatedTextKit(
               animatedTexts: [
                 TypewriterAnimatedText(
-                  'آهنگ‌های من',
+                  'My Songs',
                   textAlign: TextAlign.center,
                   cursor: "",
-                  textStyle: theme.textTheme.titleLarge?.copyWith(
-                    color: theme.colorScheme.onPrimary
-                  ),
-                  speed: const Duration(milliseconds: 70),
+                  textStyle: theme.textTheme.titleLarge?.copyWith(color: theme.colorScheme.onPrimary),
+                  speed: const Duration(milliseconds: 80),
                 ),
               ],
               totalRepeatCount: 1,
@@ -42,11 +40,7 @@ class HomePage extends StatelessWidget {
             actions: [
               Obx(
                 () => IconButton(
-                  icon: Icon(
-                    themeController.isDarkMode.value
-                        ? Icons.light_mode
-                        : Icons.dark_mode,
-                  ),
+                  icon: Icon(themeController.isDarkMode.value ? Icons.light_mode : Icons.dark_mode),
                   onPressed: () => themeController.toggleTheme(),
                 ),
               ),
@@ -65,10 +59,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     const Text('هیچ فایلی پیدا نشد'),
                     const SizedBox(height: 12),
-                    ElevatedButton(
-                      onPressed: () => controller.loadSongs(),
-                      child: const Text('درخواست دسترسی دوباره'),
-                    ),
+                    ElevatedButton(onPressed: () => controller.loadSongs(), child: const Text('درخواست دسترسی دوباره')),
                   ],
                 ),
               );
@@ -94,8 +85,7 @@ class HomePage extends StatelessWidget {
                         bool // Explicitly declare the return type for clarity
                       >(
                         title: 'حذف آهنگ',
-                        middleText:
-                            'آیا مطمئن هستید که می‌خواهید این آهنگ را حذف کنید؟',
+                        middleText: 'آیا مطمئن هستید که می‌خواهید این آهنگ را حذف کنید؟',
                         textConfirm: 'بله',
                         textCancel: 'خیر',
                         confirmTextColor: Colors.white,
@@ -132,9 +122,7 @@ class HomePage extends StatelessWidget {
                                   controller.playAt(i);
                                 }
                               },
-                              isPlaying:
-                                  (controller.currentIndex.value == i &&
-                                  controller.isPlaying.value),
+                              isPlaying: (controller.currentIndex.value == i && controller.isPlaying.value),
                               song: controller.songs[i],
                             ),
                           ),

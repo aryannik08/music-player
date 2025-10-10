@@ -25,7 +25,10 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    storage.isFirst = false;
+    Future.delayed(Duration(seconds: 30)).then((_) {
+      storage.isFirst = false;
+    });
+
     audioQuery = OnAudioQuery();
     audioPlayer = AudioPlayer();
 
@@ -53,7 +56,7 @@ class HomeController extends GetxController {
           await audioPlayer.play();
         } else {
           // اگر انتهای لیست رسیدیم، پخش را متوقف کن
-          isPlaying.value = false;
+
         }
       }
     });
@@ -86,12 +89,7 @@ class HomeController extends GetxController {
     // ساخت playlist برای just_audio
     if (songs.isNotEmpty) {
       final sources = songs
-          .map(
-            (s) => AudioSource.uri(
-              Uri.file(s.data),
-              tag: {'title': s.title, 'artist': s.artist ?? '', 'id': s.id},
-            ),
-          )
+          .map((s) => AudioSource.uri(Uri.file(s.data), tag: {'title': s.title, 'artist': s.artist ?? '', 'id': s.id}))
           .toList();
 
       _playlist = ConcatenatingAudioSource(children: sources);
@@ -117,9 +115,7 @@ class HomeController extends GetxController {
     try {
       // اگر playlist هنوز ساخته نشده، بسازش
       if (_playlist == null) {
-        final sources = songs
-            .map((s) => AudioSource.uri(Uri.file(s.data)))
-            .toList();
+        final sources = songs.map((s) => AudioSource.uri(Uri.file(s.data))).toList();
         _playlist = ConcatenatingAudioSource(children: sources);
         await audioPlayer.setAudioSource(_playlist!, initialIndex: index);
       } else {
@@ -139,17 +135,11 @@ class HomeController extends GetxController {
   Future<void> resume() async {
     // اگر منبع ست نشده و آهنگ داریم، منبع را ست کن
     if (audioPlayer.audioSource == null && _playlist != null) {
-      await audioPlayer.setAudioSource(
-        _playlist!,
-        initialIndex: currentIndex.value == -1 ? 0 : currentIndex.value,
-      );
+      await audioPlayer.setAudioSource(_playlist!, initialIndex: currentIndex.value == -1 ? 0 : currentIndex.value);
     } else if (audioPlayer.audioSource != null &&
         audioPlayer.playerState.processingState == ProcessingState.completed) {
       // اگر آهنگ قبلاً تمام شده و منبع ست شده بود، آهنگ را از ابتدا پخش کن.
-      await audioPlayer.seek(
-        Duration.zero,
-        index: currentIndex.value == -1 ? 0 : currentIndex.value,
-      );
+      await audioPlayer.seek(Duration.zero, index: currentIndex.value == -1 ? 0 : currentIndex.value);
     }
     await audioPlayer.play();
   }
@@ -206,12 +196,7 @@ class HomeController extends GetxController {
     // Rebuild the playlist for just_audio
     if (songs.isNotEmpty) {
       final sources = songs
-          .map(
-            (s) => AudioSource.uri(
-              Uri.file(s.data),
-              tag: {'title': s.title, 'artist': s.artist ?? '', 'id': s.id},
-            ),
-          )
+          .map((s) => AudioSource.uri(Uri.file(s.data), tag: {'title': s.title, 'artist': s.artist ?? '', 'id': s.id}))
           .toList();
 
       _playlist = ConcatenatingAudioSource(children: sources);
@@ -232,6 +217,8 @@ class HomeController extends GetxController {
       if (await file.exists()) {
         await file.delete();
         Get.snackbar('موفقیت', '${song.title} حذف شد');
+      } else {
+        Get.snackbar('اطلاعیه', 'فایل ${song.title} در حافظه دستگاه یافت نشد اما از لیست حذف شد.');
       }
     } catch (e) {
       Get.snackbar('خطا', 'حذف فایل از حافظه دستگاه ممکن نیست: $e');

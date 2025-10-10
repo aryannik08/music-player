@@ -31,7 +31,7 @@ class SplashPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: Get.height * 0.1),
-                Text('Welcome to GetX Flutter App', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                Text('Welcome to MS Player App', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
 
                 Spacer(),
                 AnimatedTextKit(

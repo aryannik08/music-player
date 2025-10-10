@@ -2,10 +2,11 @@
     <!-- Permissions for music file access -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     
     <application
-        android:label="untitled1"
+        android:label="MS Player"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
