@@ -1,19 +1,27 @@
-// song_details_controller.dart
+// song_details_dart
 import 'package:get/get.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:on_audio_query/on_audio_query.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:untitled1/core/storage/storage_service.dart';
-import 'package:untitled1/presentation/routes/app_routes.dart';
-import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:untitled1/presentation/style/theme_controller.dart';
 
 class SettingController extends GetxController {
   final StorageService storage = StorageService();
+  final ThemeController themeController = Get.find<ThemeController>();
 
-  RxDouble currentValue = 0.0.obs;
-  RxBool vibrationMode = true.obs;
+  late RxDouble currentValue = storage.vibValue.toDouble().obs;
+  late RxBool vibrationMode = storage.vibValue == 0 ? false.obs : true.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
 
   changeVibrationMode(RxBool value) {
     vibrationMode.value = value.value;
+  }
+
+  backAction() {
+    storage.vibValue = currentValue.value.toInt();
+    Get.back();
   }
 }

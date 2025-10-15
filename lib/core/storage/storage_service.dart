@@ -6,6 +6,7 @@ class StorageService {
   static const String keyIsDark = 'is_dark';
   static const String keyIsFirst = 'is_first';
   static const String keyVibValue = 'vib_value';
+  static const String keyThemeMode = 'theme_mode';
 
   final GetStorage _box = GetStorage(_boxName);
 
@@ -36,4 +37,8 @@ class StorageService {
   int get vibValue => _box.read<int>(keyVibValue) ?? 150;
 
   set vibValue(int value) => _box.write(keyVibValue, value);
+
+  String get themeMode => _box.read<String>(keyThemeMode) ?? 'system';
+
+  set themeMode(String value) => _box.write(keyThemeMode, value);
 }

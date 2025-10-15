@@ -11,7 +11,7 @@ class SliderWidget extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     return Obx(() {
       return Slider(
-        inactiveColor: theme.colorScheme.onSurface,
+        inactiveColor: theme.colorScheme.onSurface.withOpacity(0.5),
         value: currentValue.value,
         min: 0,
         max: 255,

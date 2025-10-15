@@ -8,7 +8,7 @@ import 'package:untitled1/presentation/ui/base/home_page/widgets/song_item_widge
 import 'package:untitled1/presentation/ui/base/home_page/home_controller.dart';
 import '../../../../core/vibration/vibration.dart';
 import '../../../routes/app_routes.dart';
-import '../../../style/theme.dart';
+import '../../../style/theme_controller.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -44,15 +44,7 @@ class HomePage extends StatelessWidget {
               displayFullTextOnTap: true,
               stopPauseOnTap: true,
             ),
-            actions: [
-              Obx(
-                () => IconButton(
-                  icon: Icon(themeController.isDarkMode.value ? Icons.light_mode : Icons.dark_mode),
-                  onPressed: () => themeController.toggleTheme(),
-                ),
-              ),
-              // IconButton(icon: const Icon(Icons.refresh), onPressed: () => controller.loadSongs()),
-            ],
+
           ),
           body: Obx(() {
             if (controller.loading.value) {

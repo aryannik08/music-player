@@ -28,27 +28,27 @@ class AppRoutes {
       page: () => HomePage(),
       binding: HomeBinding(),
       transition: Transition.fadeIn,
-      transitionDuration: Duration(milliseconds: 200),
+      transitionDuration: Duration(milliseconds: 300),
     ),
     GetPage(
       name: songDetails,
       page: () => SongDetailsPage(),
       binding: SongDetailsBinding(),
       transition: Transition.downToUp,
-      transitionDuration: Duration(milliseconds: 200),
+      transitionDuration: Duration(milliseconds: 300),
     ),
     GetPage(
       name: intro,
       page: () => const IntroPage(),
       binding: IntroBinding(),
       transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 200),
+      transitionDuration: Duration(milliseconds: 300),
     ),GetPage(
       name: setting,
       page: () => const SettingPage(),
       binding: SettingBinding(),
       transition: Transition.leftToRight,
-      transitionDuration: Duration(milliseconds: 200),
+      transitionDuration: Duration(milliseconds: 300),
     ),
 
     // Item page removed

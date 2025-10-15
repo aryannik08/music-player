@@ -37,9 +37,21 @@ class AppTheme {
         ),
       ),
       textTheme: const TextTheme(
-        headlineLarge: TextStyle(color: AppColors.textPrimary, fontSize: 32, fontWeight: FontWeight.bold),
-        headlineMedium: TextStyle(color: AppColors.textPrimary, fontSize: 28, fontWeight: FontWeight.bold),
-        headlineSmall: TextStyle(color: AppColors.textPrimary, fontSize: 24, fontWeight: FontWeight.bold),
+        headlineLarge: TextStyle(
+          color: AppColors.textPrimary,
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+        ),
+        headlineMedium: TextStyle(
+          color: AppColors.textPrimary,
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+        ),
+        headlineSmall: TextStyle(
+          color: AppColors.textPrimary,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
         bodyLarge: TextStyle(color: AppColors.textPrimary, fontSize: 16),
         bodyMedium: TextStyle(color: AppColors.textPrimary, fontSize: 14),
         bodySmall: TextStyle(color: AppColors.textSecondary, fontSize: 12),
@@ -80,32 +92,25 @@ class AppTheme {
         ),
       ),
       textTheme: const TextTheme(
-        headlineLarge: TextStyle(color: AppColors.darkTextPrimary, fontSize: 32, fontWeight: FontWeight.bold),
-        headlineMedium: TextStyle(color: AppColors.darkTextPrimary, fontSize: 28, fontWeight: FontWeight.bold),
-        headlineSmall: TextStyle(color: AppColors.darkTextPrimary, fontSize: 24, fontWeight: FontWeight.bold),
+        headlineLarge: TextStyle(
+          color: AppColors.darkTextPrimary,
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+        ),
+        headlineMedium: TextStyle(
+          color: AppColors.darkTextPrimary,
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+        ),
+        headlineSmall: TextStyle(
+          color: AppColors.darkTextPrimary,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
         bodyLarge: TextStyle(color: AppColors.darkTextPrimary, fontSize: 16),
         bodyMedium: TextStyle(color: AppColors.darkTextPrimary, fontSize: 14),
         bodySmall: TextStyle(color: AppColors.darkTextSecondary, fontSize: 12),
       ),
     );
   }
-}
-
-class ThemeController extends GetxController {
-  RxBool isDarkMode = false.obs;
-  final StorageService storage = StorageService();
-
-  @override
-  void onInit() {
-    isDarkMode.value = storage.isDark;
-    super.onInit();
-  }
-
-  void toggleTheme() {
-    isDarkMode.value = !isDarkMode.value;
-    Get.changeThemeMode(isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
-    storage.isDark = isDarkMode.value;
-  }
-
-  ThemeData get currentTheme => isDarkMode.value ? AppTheme.darkTheme : AppTheme.lightTheme;
 }
