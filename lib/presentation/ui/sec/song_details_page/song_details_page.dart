@@ -6,7 +6,6 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:untitled1/presentation/ui/sec/song_details_page/song_details_controller.dart';
-import 'package:vibration/vibration.dart';
 
 import '../../../../core/vibration/vibration.dart';
 
@@ -47,6 +46,7 @@ class SongDetailsPage extends StatelessWidget {
             appBar: AppBar(
               leading: IconButton(
                 onPressed: () {
+                  AppVibration().vibrationAction(controller.homeController.storage.vibValue);
                   Get.back();
                 },
                 icon: Icon(Icons.keyboard_arrow_down),
@@ -235,6 +235,7 @@ class SongDetailsPage extends StatelessWidget {
                               child: FadeInAnimation(
                                 child: IconButton(
                                   onPressed: () {
+                                    AppVibration().vibrationAction(controller.homeController.storage.vibValue);
                                     controller.homeController.toggleRepeat();
                                   },
                                   icon: Icon(
@@ -257,6 +258,7 @@ class SongDetailsPage extends StatelessWidget {
                               duration: Duration(milliseconds: 500),
                               child: IconButton(
                                 onPressed: () {
+                                  AppVibration().vibrationAction(controller.homeController.storage.vibValue);
                                   controller.preRotation.value -= 1;
                                   controller.homeController.previous();
                                 },
@@ -279,6 +281,7 @@ class SongDetailsPage extends StatelessWidget {
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onPressed: () {
+                                AppVibration().vibrationAction(controller.homeController.storage.vibValue);
                                 if (controller.homeController.isPlaying.value) {
                                   controller.homeController.pause();
                                 } else {
@@ -303,6 +306,7 @@ class SongDetailsPage extends StatelessWidget {
                               tag: "next_icon",
                               child: IconButton(
                                 onPressed: () {
+                                  AppVibration().vibrationAction(controller.homeController.storage.vibValue);
                                   controller.nextRotation.value += 1;
                                   controller.homeController.next();
                                 },
@@ -326,6 +330,7 @@ class SongDetailsPage extends StatelessWidget {
                               child: FadeInAnimation(
                                 child: IconButton(
                                   onPressed: () {
+                                    AppVibration().vibrationAction(controller.homeController.storage.vibValue);
                                     controller.homeController.toggleShuffle();
                                   },
                                   icon: Icon(
@@ -344,6 +349,7 @@ class SongDetailsPage extends StatelessWidget {
                     SizedBox(height: Get.height * 0.05),
                     TextButton(
                       onPressed: () {
+                        AppVibration().vibrationAction(controller.homeController.storage.vibValue);
                         Get.bottomSheet(
                           TweenAnimationBuilder(
                             tween: Tween<double>(begin: 0, end: 1),
@@ -405,6 +411,7 @@ class SongDetailsPage extends StatelessWidget {
                                                 title: Text(song.title),
                                                 subtitle: Text(song.artist ?? 'Unknown Artist'),
                                                 onTap: () {
+                                                  AppVibration().vibrationAction(controller.homeController.storage.vibValue);
                                                   controller.homeController.playAt(index);
                                                   Get.back();
                                                 },

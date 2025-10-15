@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:untitled1/presentation/ui/base/home_page/widgets/bottom_nav_widget.dart';
 import 'package:untitled1/presentation/ui/base/home_page/widgets/song_item_widget.dart';
 import 'package:untitled1/presentation/ui/base/home_page/home_controller.dart';
+import '../../../../core/vibration/vibration.dart';
+import '../../../routes/app_routes.dart';
 import '../../../style/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -22,7 +24,12 @@ class HomePage extends StatelessWidget {
         bottom: true,
         child: Scaffold(
           appBar: AppBar(
-            leading: const SizedBox(),
+            leading: IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Get.toNamed(AppRoutes.setting);
+              },
+            ),
             title: AnimatedTextKit(
               animatedTexts: [
                 TypewriterAnimatedText(
@@ -91,9 +98,11 @@ class HomePage extends StatelessWidget {
                         confirmTextColor: Colors.white,
                         onConfirm: () {
                           Get.back(result: true);
+                          AppVibration().vibrationAction(controller.storage.vibValue);
                         },
                         onCancel: () {
                           Get.back(result: false);
+                          AppVibration().vibrationAction(controller.storage.vibValue);
                         },
                       );
                     },
@@ -111,6 +120,7 @@ class HomePage extends StatelessWidget {
                               index: i,
                               isLast: isLast,
                               onTap: () {
+                                AppVibration().vibrationAction(controller.storage.vibValue);
                                 // اگر همان آهنگ در حال پخش است => toggle pause/resume
                                 if (controller.currentIndex.value == i) {
                                   if (controller.isPlaying.value) {
@@ -143,6 +153,7 @@ class HomePage extends StatelessWidget {
               onContainerTap: () => controller.nextPage(),
               isPlay: controller.isPlaying,
               onPlayTap: () {
+                AppVibration().vibrationAction(controller.storage.vibValue);
                 if (controller.isPlaying.value) {
                   controller.pause();
                 } else {

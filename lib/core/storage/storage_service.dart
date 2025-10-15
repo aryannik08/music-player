@@ -5,6 +5,7 @@ class StorageService {
   static const String keyCity = 'city_name';
   static const String keyIsDark = 'is_dark';
   static const String keyIsFirst = 'is_first';
+  static const String keyVibValue = 'vib_value';
 
   final GetStorage _box = GetStorage(_boxName);
 
@@ -32,8 +33,7 @@ class StorageService {
 
   set isFirst(bool value) => _box.write(keyIsFirst, value);
 
+  int get vibValue => _box.read<int>(keyVibValue) ?? 150;
 
-
+  set vibValue(int value) => _box.write(keyVibValue, value);
 }
-
-
