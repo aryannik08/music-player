@@ -8,14 +8,12 @@ import 'package:untitled1/presentation/ui/base/home_page/widgets/song_item_widge
 import 'package:untitled1/presentation/ui/base/home_page/home_controller.dart';
 import '../../../../core/vibration/vibration.dart';
 import '../../../routes/app_routes.dart';
-import '../../../style/theme_controller.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.find<ThemeController>();
     ThemeData theme = Theme.of(context);
     return GetBuilder<HomeController>(
       init: HomeController(),
@@ -28,6 +26,7 @@ class HomePage extends StatelessWidget {
               icon: const Icon(Icons.settings),
               onPressed: () {
                 Get.toNamed(AppRoutes.setting);
+
               },
             ),
             title: AnimatedTextKit(

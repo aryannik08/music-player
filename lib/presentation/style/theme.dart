@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:untitled1/core/storage/storage_service.dart';
 import 'colors.dart';
 
 class AppTheme {
